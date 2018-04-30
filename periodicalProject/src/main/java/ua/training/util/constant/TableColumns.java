@@ -1,6 +1,7 @@
 package ua.training.util.constant;
 
 public interface TableColumns {
+
     String USER_ID = "iduser";
     String USER_NAME = "name";
     String USER_SURNAME = "surname";

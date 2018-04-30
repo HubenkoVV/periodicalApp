@@ -10,6 +10,7 @@ public class Periodical {
 
     private List<User> users;
     private List<Payment> payments;
+    private List<Article> articles;
 
     public int getId() {
         return id;
@@ -31,7 +32,7 @@ public class Periodical {
         return shortDescription;
     }
 
-    public void setShortDescription(String shortDescription) {
+    void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
@@ -39,7 +40,7 @@ public class Periodical {
         return price;
     }
 
-    public void setPrice(int price) {
+    void setPrice(int price) {
         this.price = price;
     }
 
@@ -47,16 +48,12 @@ public class Periodical {
         return users;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public List<Payment> getPayments() {
         return payments;
     }
 
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
+    public List<Article> getArticles() {
+        return articles;
     }
 
     public static final class PeriodicalBuilder{
@@ -64,8 +61,6 @@ public class Periodical {
         private String name;
         private String shortDescription;
         private int price;
-        private List<User> users;
-        private List<Payment> payments;
 
         public PeriodicalBuilder buildId(int id) {
             this.id = id;
@@ -87,24 +82,12 @@ public class Periodical {
             return this;
         }
 
-        public PeriodicalBuilder buildUsers(List<User> users) {
-            this.users = users;
-            return this;
-        }
-
-        public PeriodicalBuilder buildPayments(List<Payment> payments) {
-            this.payments = payments;
-            return this;
-        }
-
         public Periodical build(){
             Periodical periodical = new Periodical();
             periodical.setId(id);
             periodical.setName(name);
-            periodical.setPayments(payments);
             periodical.setPrice(price);
             periodical.setShortDescription(shortDescription);
-            periodical.setUsers(users);
             return periodical;
         }
     }

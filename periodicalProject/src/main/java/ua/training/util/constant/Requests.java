@@ -28,6 +28,9 @@ public class Requests {
     public static String SELECT_PAYMENT_PERIODICAL = getMessage("select.payment.periodical");
     public static String UPDATE_USER_MONEY = getMessage("update.user.money");
     public static String UPDATE_USER_MONEY_BUY = getMessage("update.user.money.buy");
+    public static String SELECT_PERIODICALS_LIMIT = getMessage("select.periodicals.limit");
+    public static String SELECT_ARTICLES_LIMIT = getMessage("select.articles.limit");
+    public static String SELECT_ARTICLES_LIMIT_BY_ID = getMessage("select.articles.by.periodical");
 
     private static String getMessage(String message) {
         return bundle.getString(message);

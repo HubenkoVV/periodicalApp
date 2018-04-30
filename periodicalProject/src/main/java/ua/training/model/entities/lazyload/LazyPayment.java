@@ -1,7 +1,7 @@
 package ua.training.model.entities.lazyload;
 
-import ua.training.dao.PeriodicalDao;
-import ua.training.dao.factory.AbstractDaoFactory;
+import ua.training.model.dao.PeriodicalDao;
+import ua.training.model.dao.factory.AbstractDaoFactory;
 import ua.training.model.entities.Payment;
 import ua.training.model.entities.Periodical;
 
@@ -17,4 +17,6 @@ public class LazyPayment extends Payment {
         }
         return super.getPeriodicals();
     }
+
+
 }

@@ -1,8 +1,10 @@
 package ua.training.model.entities.lazyload;
 
-import ua.training.dao.PaymentDao;
-import ua.training.dao.UserDao;
-import ua.training.dao.factory.AbstractDaoFactory;
+import ua.training.model.dao.ArticleDao;
+import ua.training.model.dao.PaymentDao;
+import ua.training.model.dao.UserDao;
+import ua.training.model.dao.factory.AbstractDaoFactory;
+import ua.training.model.entities.Article;
 import ua.training.model.entities.Payment;
 import ua.training.model.entities.Periodical;
 import ua.training.model.entities.User;
@@ -28,5 +30,15 @@ public class LazyPeriodical extends Periodical {
             return paymentDao.findByPeriodical(getId());
         }
         return super.getPayments();
+    }
+
+    @Override
+    public List<Article> getArticles() {
+        if (super.getArticles() == null) {
+            AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
+            ArticleDao articleDao = daoFactory.createArticleDao();
+            return articleDao.findByPeriodical(getId());
+        }
+        return super.getArticles();
     }
 }

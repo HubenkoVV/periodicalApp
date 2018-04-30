@@ -19,7 +19,7 @@ public class User {
         return id;
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,16 +75,12 @@ public class User {
         return money;
     }
 
-    void setMoney(int money) {
+    public void setMoney(int money) {
         this.money = money;
     }
 
     public List<Payment> getPayments() {
         return payments;
-    }
-
-    void setPayments(List<Payment> payments) {
-        this.payments = payments;
     }
 
     public List<Periodical> getPeriodicals() {
@@ -104,8 +100,6 @@ public class User {
         private String phone;
         private UserRole role;
         private int money;
-        private List<Payment> payments;
-        private List<Periodical> periodicals;
 
         public UserBuilder buildId(int id) {
             this.id = id;
@@ -137,11 +131,6 @@ public class User {
             return this;
         }
 
-        public UserBuilder buildPayments(List<Payment> payments) {
-            this.payments = payments;
-            return this;
-        }
-
         public UserBuilder buildRole(UserRole role) {
             this.role = role;
             return this;
@@ -149,11 +138,6 @@ public class User {
 
         public UserBuilder buildMoney(int money) {
             this.money = money;
-            return this;
-        }
-
-        public UserBuilder buildPeriodicals(List<Periodical> periodicals) {
-            this.periodicals = periodicals;
             return this;
         }
 
@@ -165,10 +149,8 @@ public class User {
             user.setPassword(password);
             user.setPhone(phone);
             user.setSurname(surname);
-            user.setPayments(payments);
             user.setRole(role);
             user.setMoney(money);
-            user.setPeriodicals(periodicals);
             return user;
         }
     }
