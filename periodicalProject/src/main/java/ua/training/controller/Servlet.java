@@ -1,6 +1,7 @@
 package ua.training.controller;
 
 import ua.training.controller.command.CreatorCommand;
+import ua.training.util.constant.Attributes;
 import ua.training.util.constant.Pages;
 
 import javax.servlet.RequestDispatcher;
@@ -29,6 +30,10 @@ public class Servlet extends HttpServlet {
 
     private void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = creatorCommand.action(request);
+        if(page == null){
+            request.getSession().setAttribute(Attributes.PAGE, Pages.HOME);
+            page = Pages.HOME;
+        }
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
