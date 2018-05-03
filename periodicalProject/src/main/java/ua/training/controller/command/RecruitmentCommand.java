@@ -6,6 +6,7 @@ import ua.training.model.entities.User;
 import ua.training.model.service.UserService;
 import ua.training.model.service.exception.IncorrectDataException;
 import ua.training.util.constant.Attributes;
+import ua.training.util.locale.LocalizeMessage;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +29,7 @@ public class RecruitmentCommand implements Command {
             request.getSession().setAttribute(Attributes.USER, user);
         } catch (IncorrectDataException e) {
             logger.info("Update account for \'" + user.getLogin() + "\' was failed");
-            request.setAttribute(Attributes.EXCEPTION, e.getMessage());
+            request.setAttribute(Attributes.EXCEPTION, LocalizeMessage.getException(e.getMessage()));
             return (String) request.getSession().getAttribute(Attributes.PAGE);
         }
         logger.info("Successful updating account for \'" + user.getLogin() + "\'");

@@ -4,10 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.entities.User;
 import ua.training.model.entities.UserRole;
+import ua.training.model.entities.lazyload.LazyUser;
 import ua.training.model.service.UserService;
 import ua.training.model.service.exception.IncorrectDataException;
 import ua.training.util.constant.Attributes;
 import ua.training.util.constant.Messages;
+import ua.training.util.locale.LocalizeMessage;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,18 +37,17 @@ public class RegistrationCommand implements Command {
                             .buildRole(UserRole.USER)
                             .buildMoney(0)
                             .buildPhone(request.getParameter(Attributes.PHONE))
-                            .build(), request.getParameter(Attributes.PASSWORD), request.getParameter(Attributes.PASSWORD_AGAIN));
+                            .buildLazy(), request.getParameter(Attributes.PASSWORD), request.getParameter(Attributes.PASSWORD_AGAIN));
             request.getSession().setAttribute(Attributes.USER, user);
             request.getSession().setAttribute(Attributes.USER_ROLE, user.getRole());
         } catch (IncorrectDataException e) {
-            request.setAttribute(Attributes.EXCEPTION, e.getMessage());
+            request.setAttribute(Attributes.REG_EXCEPTION, LocalizeMessage.getException(e.getMessage()));
             logger.info("Registration by \'" + email + "\' was failed");
-            request.setAttribute(Attributes.OPEN_REGISTRATION, "$(\"#registration_modal\").modal({show: open_registration});");
+            request.setAttribute(Attributes.OPEN_REGISTRATION, "$(\"#registration_modal\").modal({show: true});");
             return (String) request.getSession().getAttribute(Attributes.PAGE);
         }
 
         logger.info("Registration by \'" + email + "\'");
-        request.setAttribute(Attributes.MESSAGE, Messages.ADD_USER);
         return (String) request.getSession().getAttribute(Attributes.PAGE);
     }
 }
