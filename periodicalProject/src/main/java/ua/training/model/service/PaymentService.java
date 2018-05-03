@@ -17,7 +17,6 @@ public class PaymentService {
     public Payment createPayment(Payment payment, User user) throws IncorrectDataException, NotEnoughMoneyException {
 
         checkUserBalance(payment.getPrice(), user.getMoney());
-
         PaymentDao paymentDao = daoFactory.createPaymentDao();
         try{
             paymentDao.setAutoCommit(false);
@@ -28,7 +27,9 @@ public class PaymentService {
             payment.setId(id);
         } catch (SQLIntegrityConstraintViolationException e) {
             paymentDao.rollback();
-            throw new IncorrectDataException(Exceptions.NOT_ENOUGH_MONEY);
+            throw new IncorrectDataException(Exceptions.INCORRECT_DATA);
+        } finally {
+            paymentDao.close();
         }
         return payment;
     }
