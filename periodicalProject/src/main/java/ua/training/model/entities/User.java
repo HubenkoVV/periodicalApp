@@ -1,5 +1,7 @@
 package ua.training.model.entities;
 
+import ua.training.model.entities.lazyload.LazyUser;
+
 import java.util.List;
 
 public class User {
@@ -27,7 +29,7 @@ public class User {
         return name;
     }
 
-    void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
@@ -35,7 +37,7 @@ public class User {
         return surname;
     }
 
-    void setSurname(String surname) {
+    protected void setSurname(String surname) {
         this.surname = surname;
     }
 
@@ -43,7 +45,7 @@ public class User {
         return login;
     }
 
-    void setLogin(String login) {
+    protected void setLogin(String login) {
         this.login = login;
     }
 
@@ -51,7 +53,7 @@ public class User {
         return password;
     }
 
-    void setPassword(int password) {
+    protected void setPassword(int password) {
         this.password = password;
     }
 
@@ -59,7 +61,7 @@ public class User {
         return phone;
     }
 
-    void setPhone(String phone) {
+    protected void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -67,7 +69,7 @@ public class User {
         return role;
     }
 
-    void setRole(UserRole role) {
+    protected void setRole(UserRole role) {
         this.role = role;
     }
 
@@ -89,6 +91,40 @@ public class User {
 
     void setPeriodicals(List<Periodical> periodicals) {
         this.periodicals = periodicals;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id
+                && password == user.password
+                && money == user.money
+                && name.equals(user.name)
+                && surname.equals(user.surname)
+                && login.equals(user.login)
+                && (phone != null ? phone.equals(user.phone) : user.phone == null)
+                && role == user.role
+                && (payments != null ? payments.equals(user.payments) : user.payments == null)
+                && (periodicals != null ? periodicals.equals(user.periodicals) : user.periodicals == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + login.hashCode();
+        result = 31 * result + password;
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + role.hashCode();
+        result = 31 * result + money;
+        result = 31 * result + (payments != null ? payments.hashCode() : 0);
+        result = 31 * result + (periodicals != null ? periodicals.hashCode() : 0);
+        return result;
     }
 
     public static final class UserBuilder{
@@ -143,6 +179,19 @@ public class User {
 
         public User build(){
             User user = new User();
+            user.setId(id);
+            user.setLogin(login);
+            user.setName(name);
+            user.setPassword(password);
+            user.setPhone(phone);
+            user.setSurname(surname);
+            user.setRole(role);
+            user.setMoney(money);
+            return user;
+        }
+
+        public LazyUser buildLazy(){
+            LazyUser user = new LazyUser();
             user.setId(id);
             user.setLogin(login);
             user.setName(name);

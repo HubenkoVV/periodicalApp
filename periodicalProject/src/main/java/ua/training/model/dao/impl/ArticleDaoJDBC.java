@@ -26,6 +26,7 @@ public class ArticleDaoJDBC implements ArticleDao {
             ps.setInt(3,entity.getIdPeriodical());
             ps.setString(4,entity.getText());
             ps.executeUpdate();
+            connection.commit();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
             return rs.getInt(1);

@@ -21,7 +21,7 @@ public class Payment {
         return price;
     }
 
-    public void setPrice(int price) {
+    void setPrice(int price) {
         this.price = price;
     }
 
@@ -29,7 +29,7 @@ public class Payment {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
@@ -39,6 +39,28 @@ public class Payment {
 
     public void setPeriodicals(List<Periodical> periodicals) {
         this.periodicals = periodicals;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Payment payment = (Payment) o;
+
+        return id == payment.id
+                && price == payment.price
+                && idUser == payment.idUser
+                && periodicals.equals(payment.periodicals);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + price;
+        result = 31 * result + idUser;
+        result = 31 * result + periodicals.hashCode();
+        return result;
     }
 
     public static final class PaymentBuilder{

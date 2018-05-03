@@ -15,9 +15,9 @@ public class PoolConnection {
                     ds.setUrl("jdbc:mysql://localhost:3306/project_db");
                     ds.setUsername("root");
                     ds.setPassword("root");
-                    ds.setMinIdle(5);
-                    ds.setMaxIdle(10);
-                    ds.setMaxOpenPreparedStatements(100);
+                    ds.setMinIdle(10);
+                    ds.setMaxIdle(50);
+                    ds.setMaxOpenPreparedStatements(10000);
                     dataSource = ds;
                 }
             }

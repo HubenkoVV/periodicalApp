@@ -25,6 +25,7 @@ public class PeriodicalDaoJDBC implements PeriodicalDao {
             ps.setInt(2,entity.getPrice());
             ps.setString(3,entity.getShortDescription());
             ps.executeUpdate();
+            connection.commit();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
             return rs.getInt(1);
