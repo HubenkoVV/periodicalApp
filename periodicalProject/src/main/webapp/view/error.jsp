@@ -7,7 +7,7 @@
             <div class = "jumbotron">
                 <h1><i class="fa fa-ban red"></i>Error Page</h1>
                 <p class="lead">Error <%= exception %></p>
-                <p><a href = "/api/periodicals" class="btn btn-default btn-lg">Homepage</a></p>
+                <p><a href = "/view/index.jsp" class="btn btn-default btn-lg">Homepage</a></p>
             </div>
         </div>
     </body>
