@@ -45,12 +45,15 @@ public class BuyPeriodicalsCommand implements Command {
                     .buildPeriodicals(periodicals)
                     .buildPrice((Integer) request.getSession().getAttribute(Attributes.FULL_PRICE))
                     .build();
-            paymentService.createPayment(payment, user);
+            payment = paymentService.createPayment(payment, user);
+            user.setMoney(user.getMoney() - payment.getPrice());
         } catch (IncorrectDataException | NotEnoughMoneyException e) {
-            request.setAttribute(Attributes.EXCEPTION, e.getMessage());
+            request.setAttribute(Attributes.EXCEPTION, LocalizeMessage.getException(e.getMessage()));
             return (String) request.getSession().getAttribute(Attributes.PAGE);
         }
-        request.setAttribute(Attributes.PERIODICALS_IN_BASKET, null);
+        request.getSession().setAttribute(Attributes.PERIODICALS_IN_BASKET, null);
+        request.getSession().setAttribute(Attributes.USER, user);
+        request.getSession().setAttribute(Attributes.FULL_PRICE, 0);
         return (String) request.getSession().getAttribute(Attributes.PAGE);
     }
 }

@@ -16,20 +16,25 @@ import java.util.Map;
 
 public class CommandFilter implements Filter {
 
-    Map<UserRole, List<String>> commands;
+    private Map<UserRole, List<String>> commands;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         commands = new HashMap<>();
         List<String> notUserCommands = new ArrayList<>();
         notUserCommands.add(Commands.ADD_ARTICLE);
-        notUserCommands.add(Commands.ADD_PERIODICAL);
+        notUserCommands.add(Commands.CREATE_PERIODICAL);
+        notUserCommands.add(Commands.CREATE_ARTICLE);
         commands.put(UserRole.USER, notUserCommands);
         List<String> notGuestCommands = new ArrayList<>();
         notGuestCommands.add(Commands.UPDATE_ACCOUNT);
         notGuestCommands.add(Commands.SIGNOUT);
         notGuestCommands.add(Commands.ADD_ARTICLE);
-        notGuestCommands.add(Commands.ADD_PERIODICAL);
+        notGuestCommands.add(Commands.CREATE_PERIODICAL);
+        notGuestCommands.add(Commands.CREATE_ARTICLE);
+        notGuestCommands.add(Commands.SHOW_ARTICLE);
+        notGuestCommands.add(Commands.MY_ACCOUNT);
+        notGuestCommands.add(Commands.ARTICLES);
         commands.put(UserRole.GUEST, notGuestCommands);
     }
 
@@ -42,7 +47,7 @@ public class CommandFilter implements Filter {
         command = command.replaceAll(".*/api/" , "");
         UserRole userRole = (UserRole)(request.getSession().getAttribute(Attributes.USER_ROLE));
 
-        if(commands.get(userRole).contains(command))
+        if(userRole != UserRole.ADMIN && commands.get(userRole).contains(command))
             throw new UnsupportedOperationException(command);
 
         filterChain.doFilter(request,response);

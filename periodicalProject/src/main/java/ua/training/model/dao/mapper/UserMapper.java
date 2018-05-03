@@ -20,6 +20,6 @@ public class UserMapper implements GeneralMapper<User> {
                 .buildMoney(rs.getInt(TableColumns.USER_MONEY))
                 .buildPhone(rs.getString(TableColumns.USER_PHONE))
                 .buildRole(UserRole.valueOf(rs.getString(TableColumns.USER_ROLE)))
-                .build();
+                .buildLazy();
     }
 }

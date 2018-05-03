@@ -40,7 +40,7 @@ public class Periodical {
         return price;
     }
 
-    void setPrice(int price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -54,6 +54,34 @@ public class Periodical {
 
     public List<Article> getArticles() {
         return articles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Periodical that = (Periodical) o;
+
+        return id == that.id
+                && price == that.price
+                && name.equals(that.name)
+                && shortDescription.equals(that.shortDescription)
+                && (users != null ? users.equals(that.users) : that.users == null)
+                && (payments != null ? payments.equals(that.payments) : that.payments == null)
+                && (articles != null ? articles.equals(that.articles) : that.articles == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + shortDescription.hashCode();
+        result = 31 * result + price;
+        result = 31 * result + (users != null ? users.hashCode() : 0);
+        result = 31 * result + (payments != null ? payments.hashCode() : 0);
+        result = 31 * result + (articles != null ? articles.hashCode() : 0);
+        return result;
     }
 
     public static final class PeriodicalBuilder{

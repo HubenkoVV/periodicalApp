@@ -44,6 +44,7 @@ public class UserDaoJDBC implements UserDao {
             ps.setInt(6,entity.getMoney());
             ps.setString(7,entity.getPhone());
             ps.executeUpdate();
+            connection.commit();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
             return rs.getInt(1);
@@ -89,6 +90,7 @@ public class UserDaoJDBC implements UserDao {
             ps.setInt(1, user.getMoney());
             ps.setInt(2, user.getId());
             ps.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

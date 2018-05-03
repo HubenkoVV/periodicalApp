@@ -25,26 +25,28 @@ public class AddArticleCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) {
-        Article article;
         request.setAttribute(Attributes.EXCEPTION, null);
         request.setAttribute(Attributes.MESSAGE, null);
+        Article article = new Article.ArticleBuilder()
+                .buildDate(LocalDate.now())
+                .buildIdPeriodical(Integer.parseInt(request.getParameter(Attributes.ID_PERIODICAL)))
+                .buildName(request.getParameter(Attributes.ARTICLE_NAME))
+                .buildText(request.getParameter(Attributes.ARTICLE_TEXT))
+                .build();
         try {
-            article = new Article.ArticleBuilder()
-                    .buildDate(LocalDate.now())
-                    .buildIdPeriodical(Integer.parseInt(request.getParameter(Attributes.ID_PERIODICAL)))
-                    .buildName(request.getParameter(Attributes.ARTICLE_NAME))
-                    .buildText(request.getParameter(Attributes.ARTICLE_TEXT))
-                    .build();
             article = articleService.createArticle(article);
-            request.setAttribute(Attributes.ARTICLE, article);
         } catch (IncorrectDataException e) {
-            request.setAttribute(Attributes.EXCEPTION, LocalizeMessage.getException(e.getMessage()));
             logger.info("Failed adding article");
-            return Pages.ADD_ARTICLE;
+            request.setAttribute(Attributes.EXCEPTION, LocalizeMessage.getException(e.getMessage()));
+            request.getSession().setAttribute(Attributes.PAGE, Commands.ADD_ARTICLE + "?"+
+                    Attributes.ARTICLE_NAME + "=" + article.getName() + "&" + Attributes.ARTICLE_TEXT + "=" + article.getText()
+                    + "&" + Attributes.ID_PERIODICAL + "=" + article.getIdPeriodical());
+            return (String) request.getSession().getAttribute(Attributes.PAGE);
         }
+        request.setAttribute(Attributes.ARTICLE, article);
         request.setAttribute(Attributes.MESSAGE, LocalizeMessage.getMessage(Messages.ADD_ARTICLE));
-        logger.info("Added article");
         request.getSession().setAttribute(Attributes.PAGE, Commands.SHOW_ARTICLE + "?"+ Attributes.ARTICLE_ID + "=" + article.getId() );
-        return Pages.ARTICLE;
+        logger.info("Added article");
+        return (String) request.getSession().getAttribute(Attributes.PAGE);
     }
 }

@@ -28,13 +28,14 @@ public class UserService {
         } catch (SQLIntegrityConstraintViolationException e) {
             userDao.rollback();
             throw new IncorrectDataException(Exceptions.NOT_UNIQUE_LOGIN);
+        } finally {
+            userDao.close();
         }
         return user;
     }
 
     public User getByLoginAndPassword(String login, String password) throws IncorrectDataException {
         try(UserDao userDao = daoFactory.createUserDao()) {
-            userDao.setAutoCommit(false);
             User user = userDao.findByLogin(login);
             if (user == null) {
                 throw new IncorrectDataException(Exceptions.WRONG_LOGIN);
@@ -48,7 +49,7 @@ public class UserService {
         try(UserDao userDao = daoFactory.createUserDao()) {
             if(!isDataCorrect(money, RegexForUser.MONEY))
                 throw new IncorrectDataException(Exceptions.WRONG_MONEY);
-            user.setMoney(Integer.parseInt(money));
+            user.setMoney(user.getMoney() + Integer.parseInt(money));
             userDao.setAutoCommit(false);
             userDao.updateMoney(user);
             return user;
@@ -56,9 +57,12 @@ public class UserService {
     }
 
     public User getById(int id) {
+        User user;
         try(UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.findById(id);
+            user = userDao.findById(id);
+            userDao.close();
         }
+        return user;
     }
 
     public List<User> getAll() {
@@ -78,7 +82,7 @@ public class UserService {
             throw new IncorrectDataException(Exceptions.INCORRECT_PHONE);
         }
         if(!password.equals(repeatPassword)){
-            throw new IncorrectDataException(Exceptions.WRONG_PASSWORD);
+            throw new IncorrectDataException(Exceptions.INCORRECT_PASSWORD);
         }
     }
 
@@ -88,9 +92,9 @@ public class UserService {
         }
     }
 
-    private boolean isDataCorrect(String login, String regex) {
+    private boolean isDataCorrect(String data, String regex) {
         Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(login);
+        Matcher m = p.matcher(data);
         return m.matches();
     }
 

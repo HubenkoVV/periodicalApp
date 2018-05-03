@@ -8,4 +8,5 @@ public interface Pages {
     String BASKET = "/view/basket.jsp";
     String ADD_PERIODICAL = "/view/add_periodical.jsp";
     String ADD_ARTICLE = "/view/add_article.jsp";
+    String ACCOUNT = "/view/account.jsp";
 }

@@ -1,13 +1,15 @@
 package ua.training.controller.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ua.training.model.entities.Periodical;
 import ua.training.model.entities.User;
+import ua.training.model.entities.UserRole;
 import ua.training.model.service.PeriodicalService;
+import ua.training.model.service.UserService;
 import ua.training.util.constant.Attributes;
 import ua.training.util.constant.Commands;
+import ua.training.util.constant.Exceptions;
 import ua.training.util.constant.Pages;
+import ua.training.util.locale.LocalizeMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -16,11 +18,12 @@ import java.util.Map;
 
 public class PeriodicalListCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(PeriodicalListCommand.class);
     private PeriodicalService periodicalService;
+    private UserService userService;
 
-    PeriodicalListCommand(PeriodicalService periodicalService) {
+    PeriodicalListCommand(PeriodicalService periodicalService, UserService userService) {
         this.periodicalService = periodicalService;
+        this.userService = userService;
     }
     @Override
     public String execute(HttpServletRequest request) {
@@ -44,14 +47,13 @@ public class PeriodicalListCommand implements Command {
         User user =  (User) request.getSession().getAttribute(Attributes.USER);
 
         if (user != null) {
-            periodicalsOfUser = user.getPeriodicals();
+            periodicalsOfUser = userService.getById(user.getId()).getPeriodicals();
         } else {
             periodicalsOfUser = new ArrayList<>();
         }
         request.setAttribute(Attributes.PERIODICALS_USER, periodicalsOfUser);
         request.getSession().setAttribute(Attributes.PAGE, Commands.PERIODICALS + "?" + Attributes.PERIODICAL_PAGE
                 + "=" + periodicalPage);
-        logger.info("Show periodicals");
         return Pages.PERIODICALS;
     }
 }

@@ -28,6 +28,8 @@ public class ArticleService {
         } catch (SQLIntegrityConstraintViolationException e) {
             articleDao.rollback();
             throw new IncorrectDataException(Exceptions.INCORRECT_DATA);
+        } finally {
+            articleDao.close();
         }
         return article;
     }

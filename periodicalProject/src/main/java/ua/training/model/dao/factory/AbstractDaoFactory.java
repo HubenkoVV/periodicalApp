@@ -17,8 +17,7 @@ public abstract class AbstractDaoFactory{
         if( daoFactory == null ){
             synchronized (AbstractDaoFactory.class){
                 if(daoFactory==null){
-                    AbstractDaoFactory temp = new DaoFactory();
-                    daoFactory = temp;
+                    daoFactory = new DaoFactory();
                 }
             }
         }

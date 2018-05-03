@@ -45,7 +45,7 @@ public class PaymentDaoJDBC implements PaymentDao {
             psUpdateMoney.setInt(1,entity.getPrice());
             psUpdateMoney.setInt(2,entity.getIdUser());
             psUpdateMoney.executeUpdate();
-
+            connection.commit();
             return idPayment;
         } catch (SQLException e) {
             e.printStackTrace();

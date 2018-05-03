@@ -25,21 +25,25 @@ public class CreatorCommand {
         commands.put(Commands.LOGIN, new SignInCommand(userService));
         commands.put(Commands.REGISTRATION, new RegistrationCommand(userService));
         commands.put(Commands.SIGNOUT, new SignOutCommand());
-        commands.put(Commands.ADD_ARTICLE,new AddArticleCommand(articleService));
-        commands.put(Commands.ADD_PERIODICAL, new AddPeriodicalCommand(periodicalService));
-        commands.put(Commands.ARTICLES, new ArticleListCommand(articleService));
+        commands.put(Commands.ADD_ARTICLE,new AddArticlePageCommand(periodicalService));
+        commands.put(Commands.ADD_PERIODICAL,new AddPeriodicalPageCommand());
+        commands.put(Commands.CREATE_PERIODICAL, new AddPeriodicalCommand(periodicalService));
+        commands.put(Commands.ARTICLES, new ArticleListCommand(articleService, periodicalService));
         commands.put(Commands.BUY_PERIODICAL, new BuyPeriodicalsCommand(paymentService));
-        commands.put(Commands.PERIODICALS, new PeriodicalListCommand(periodicalService));
-        commands.put(Commands.SHOW_ARTICLE,new ShowArticleCommand(articleService));
+        commands.put(Commands.PERIODICALS, new PeriodicalListCommand(periodicalService, userService));
+        commands.put(Commands.SHOW_ARTICLE,new ShowArticleCommand(articleService, periodicalService));
         commands.put(Commands.UPDATE_ACCOUNT, new RecruitmentCommand(userService));
         commands.put(Commands.TO_BASKET, new AddToBasketCommand(periodicalService));
-        commands.put("/", new PeriodicalListCommand(periodicalService));
+        commands.put(Commands.MY_ACCOUNT, new MyAccountCommand());
+        commands.put(Commands.DELETE_FROM_BASKET, new DeleteFromBasketCommand(periodicalService));
+        commands.put(Commands.CREATE_ARTICLE, new AddArticleCommand(articleService));
+        commands.put("/", new PeriodicalListCommand(periodicalService, userService));
     }
 
     public String action(HttpServletRequest request){
         String path = request.getRequestURI();
         String name = path.replaceAll(".*/api/" , "");
-        Command command = commands.getOrDefault(name, new PeriodicalListCommand(new PeriodicalService()));
+        Command command = commands.getOrDefault(name, new PeriodicalListCommand(new PeriodicalService(), new UserService()));
         return command.execute(request);
     }
 }

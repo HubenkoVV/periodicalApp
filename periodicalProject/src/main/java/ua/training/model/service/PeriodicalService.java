@@ -27,6 +27,8 @@ public class PeriodicalService {
         } catch (SQLIntegrityConstraintViolationException e) {
             periodicalDao.rollback();
             throw new IncorrectDataException(Exceptions.INCORRECT_DATA);
+        } finally {
+            periodicalDao.close();
         }
         return periodical;
     }
@@ -54,7 +56,10 @@ public class PeriodicalService {
                 pageOfPeriodicals = periodicalDao
                         .findFixedNumberOfPeriodicals(periodicalsOnPage, periodicalsOnPage*pageNumber);
             }
+            periodicalDao.close();
             return result;
         }
     }
+
+
 }

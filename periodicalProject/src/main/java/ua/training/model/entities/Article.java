@@ -38,7 +38,7 @@ public class Article {
         return idPeriodical;
     }
 
-    public void setIdPeriodical(int idPeriodical) {
+    void setIdPeriodical(int idPeriodical) {
         this.idPeriodical = idPeriodical;
     }
 
@@ -46,8 +46,32 @@ public class Article {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Article article = (Article) o;
+
+        return id == article.id
+                && idPeriodical == article.idPeriodical
+                && name.equals(article.name)
+                && text.equals(article.text)
+                && date.equals(article.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + text.hashCode();
+        result = 31 * result + idPeriodical;
+        result = 31 * result + date.hashCode();
+        return result;
     }
 
     public static final class ArticleBuilder{

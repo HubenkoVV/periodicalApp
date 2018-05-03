@@ -6,6 +6,7 @@ import ua.training.model.entities.User;
 import ua.training.model.service.UserService;
 import ua.training.model.service.exception.IncorrectDataException;
 import ua.training.util.constant.Attributes;
+import ua.training.util.locale.LocalizeMessage;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,8 +30,8 @@ public class SignInCommand implements Command{
             request.getSession().setAttribute(Attributes.USER_ROLE, user.getRole());
         } catch (IncorrectDataException e) {
             logger.info("Sign in by \'" + email + "\' was failed");
-            request.setAttribute(Attributes.EXCEPTION, e.getMessage());
-            request.setAttribute(Attributes.OPEN_LOGIN, "$(\"#login_modal\").modal({show: open_login});");
+            request.setAttribute(Attributes.SIGNUP_EXCEPTION, LocalizeMessage.getException(e.getMessage()));
+            request.setAttribute(Attributes.OPEN_LOGIN, "$(\"#login_modal\").modal({show: true});");
             return (String) request.getSession().getAttribute(Attributes.PAGE);
         }
         logger.info("Sign in by \'" + email);
