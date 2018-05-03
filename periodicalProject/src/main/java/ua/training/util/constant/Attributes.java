@@ -20,6 +20,8 @@ public interface Attributes {
     String USER_ROLE = "user_role";
     String MONEY = "user_money";
 
+    String REG_EXCEPTION = "reg_exception";
+    String SIGNUP_EXCEPTION = "signup_exception";
 
     String FULL_PRICE = "full_price";
     String PERIODICALS_IN_BASKET = "periodicals_in_basket";
@@ -27,7 +29,7 @@ public interface Attributes {
     String PERIODICAL_PAGE = "periodicals_page";
     String PERIODICALS_USER = "user_periodicals";
     String ARTICLES_PAGE = "articles_page";
-    String PAGES = "pages_of_periodicals";
+    String PAGES = "pages";
     String CURRENT_PAGE = "current_page";
     String PERIODICAL_LIST = "periodicals_list";
     String ARTICLE_LIST = "article_list";
@@ -42,4 +44,5 @@ public interface Attributes {
 
     String ARTICLE= "article";
     String ID_PERIODICAL = "id_periodical";
+    String PERIODICAL = "periodical";
 }
