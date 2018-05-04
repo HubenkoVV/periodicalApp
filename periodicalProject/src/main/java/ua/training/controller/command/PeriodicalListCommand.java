@@ -28,10 +28,15 @@ public class PeriodicalListCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
+        String searchName = request.getParameter(Attributes.PERIODICAL_SEARCH);
         List<Periodical> periodicalsOfUser;
-
-        Map<Integer, List<Periodical>> periodicalsOnPage = periodicalService
-                .getPeriodicalsOnPages(4);
+        Map<Integer, List<Periodical>> periodicalsOnPage;
+        if(searchName == null || searchName.isEmpty()) {
+            periodicalsOnPage = periodicalService.getPeriodicalsOnPages(4);
+        }
+        else {
+            periodicalsOnPage = periodicalService.searchPeriodicals(searchName,4);
+        }
 
         String periodicalPage = request.getParameter(Attributes.PERIODICAL_PAGE);
 
@@ -53,7 +58,7 @@ public class PeriodicalListCommand implements Command {
         }
         request.setAttribute(Attributes.PERIODICALS_USER, periodicalsOfUser);
         request.getSession().setAttribute(Attributes.PAGE, Commands.PERIODICALS + "?" + Attributes.PERIODICAL_PAGE
-                + "=" + periodicalPage);
+                + "=" + periodicalPage + "&" + Attributes.PERIODICAL_SEARCH + "=" + searchName);
         return Pages.PERIODICALS;
     }
 }
