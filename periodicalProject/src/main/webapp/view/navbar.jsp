@@ -6,6 +6,12 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="${pageContext.request.contextPath}/api/periodicals"><fmt:message bundle="${messages}" key="periodicals"/></a></li>
+      <form class="navbar-form navbar-left" action="/api/periodicals">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="<fmt:message bundle='${messages}' key='search'/>" name="search_name">
+      </div>
+      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+    </form>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class = "dropdown ${requestScope.dropdown_open}">

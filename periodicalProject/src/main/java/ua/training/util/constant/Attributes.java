@@ -45,4 +45,5 @@ public interface Attributes {
     String ARTICLE= "article";
     String ID_PERIODICAL = "id_periodical";
     String PERIODICAL = "periodical";
+    String PERIODICAL_SEARCH = "search_name";
 }

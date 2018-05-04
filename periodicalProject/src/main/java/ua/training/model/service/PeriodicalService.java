@@ -48,13 +48,25 @@ public class PeriodicalService {
     public Map<Integer, List<Periodical>> getPeriodicalsOnPages(int periodicalsOnPage) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             Map<Integer, List<Periodical>> result = new HashMap<>();
-            List<Periodical> pageOfPeriodicals = periodicalDao
-                    .findFixedNumberOfPeriodicals(periodicalsOnPage, 0);
+            List<Periodical> pageOfPeriodicals = periodicalDao.findFixedNumberOfPeriodicals(periodicalsOnPage, 0);
 
             for (int pageNumber = 1; !pageOfPeriodicals.isEmpty(); pageNumber++) {
                 result.put(pageNumber, pageOfPeriodicals);
-                pageOfPeriodicals = periodicalDao
-                        .findFixedNumberOfPeriodicals(periodicalsOnPage, periodicalsOnPage*pageNumber);
+                pageOfPeriodicals = periodicalDao.findFixedNumberOfPeriodicals(periodicalsOnPage, periodicalsOnPage*pageNumber);
+            }
+            periodicalDao.close();
+            return result;
+        }
+    }
+
+    public Map<Integer, List<Periodical>> searchPeriodicals(String name, int periodicalsOnPage) {
+        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+            Map<Integer, List<Periodical>> result = new HashMap<>();
+            List<Periodical> pageOfPeriodicals = periodicalDao.searchPeriodicals(name, periodicalsOnPage, 0);
+
+            for (int pageNumber = 1; !pageOfPeriodicals.isEmpty(); pageNumber++) {
+                result.put(pageNumber, pageOfPeriodicals);
+                pageOfPeriodicals = periodicalDao.searchPeriodicals(name, periodicalsOnPage, periodicalsOnPage*pageNumber);
             }
             periodicalDao.close();
             return result;

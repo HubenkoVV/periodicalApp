@@ -31,6 +31,7 @@ public class Requests {
     public static String SELECT_PERIODICALS_LIMIT = getMessage("select.periodicals.limit");
     public static String SELECT_ARTICLES_LIMIT = getMessage("select.articles.limit");
     public static String SELECT_ARTICLES_LIMIT_BY_ID = getMessage("select.articles.by.periodical");
+    public static String SEARCH_PERIODICAL = getMessage("search.periodical");
 
     private static String getMessage(String message) {
         return bundle.getString(message);

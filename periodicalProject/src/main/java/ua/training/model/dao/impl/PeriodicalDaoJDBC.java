@@ -116,6 +116,25 @@ public class PeriodicalDaoJDBC implements PeriodicalDao {
     }
 
     @Override
+    public List<Periodical> searchPeriodicals(String name, int limit, int offset) {
+        List<Periodical> resultList = new ArrayList<>();
+        PeriodicalMapper periodicalMapper = new PeriodicalMapper();
+
+        try (PreparedStatement ps = connection.prepareStatement(Requests.SEARCH_PERIODICAL)) {
+            ps.setString(1, "%" + name + "%");
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultList.add(periodicalMapper.getFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultList;
+    }
+
+    @Override
     public void update(Periodical entity, int id) {
     }
 
