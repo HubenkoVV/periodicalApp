@@ -1,5 +1,6 @@
 package ua.training.model.service;
 
+import org.jetbrains.annotations.NotNull;
 import ua.training.model.dao.ArticleDao;
 import ua.training.model.dao.factory.AbstractDaoFactory;
 import ua.training.model.dao.factory.DaoFactory;
@@ -20,6 +21,7 @@ public class ArticleService {
         ArticleDao articleDao = daoFactory.createArticleDao();
         try{
             articleDao.setAutoCommit(false);
+            article.setText(textareaToHTML(article.getText()));
             int id = articleDao.create(article);
             if (id == 0) {
                 throw new SQLIntegrityConstraintViolationException();
@@ -40,27 +42,6 @@ public class ArticleService {
         }
     }
 
-    public List<Article> getAll() {
-        try(ArticleDao articleDao = daoFactory.createArticleDao()) {
-            return articleDao.findAll();
-        }
-    }
-
-    public Map<Integer, List<Article>> getArticlesOnPages(int articlesOnPage) {
-        try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
-            Map<Integer, List<Article>> result = new HashMap<>();
-            List<Article> pageOfArticles = articleDao
-                    .findFixedNumberOfArticles(articlesOnPage, 0);
-
-            for (int pageNumber = 1; !pageOfArticles.isEmpty(); pageNumber++) {
-                result.put(pageNumber, pageOfArticles);
-                pageOfArticles = articleDao
-                        .findFixedNumberOfArticles(articlesOnPage, articlesOnPage*pageNumber);
-            }
-            return result;
-        }
-    }
-
     public Map<Integer, List<Article>> getArticlesOnPagesByPeriodical(int id, int articlesOnPage) {
         try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
             Map<Integer, List<Article>> result = new HashMap<>();
@@ -74,5 +55,15 @@ public class ArticleService {
             }
             return result;
         }
+    }
+
+    @NotNull
+    private String textareaToHTML(String text){
+        String[] paragraphs = text.split("\r\n");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String paragraph: paragraphs) {
+            stringBuilder.append("<p>").append(paragraph);
+        }
+        return stringBuilder.toString();
     }
 }
