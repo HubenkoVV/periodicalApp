@@ -100,16 +100,7 @@ public class User {
 
         User user = (User) o;
 
-        return id == user.id
-                && password == user.password
-                && money == user.money
-                && name.equals(user.name)
-                && surname.equals(user.surname)
-                && login.equals(user.login)
-                && (phone != null ? phone.equals(user.phone) : user.phone == null)
-                && role == user.role
-                && (payments != null ? payments.equals(user.payments) : user.payments == null)
-                && (periodicals != null ? periodicals.equals(user.periodicals) : user.periodicals == null);
+        return id == user.id;
     }
 
     @Override

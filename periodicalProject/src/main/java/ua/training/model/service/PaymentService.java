@@ -9,13 +9,11 @@ import ua.training.model.service.exception.NotEnoughMoneyException;
 import ua.training.util.constant.Exceptions;
 
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
 
 public class PaymentService {
     private AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
     public Payment createPayment(Payment payment, User user) throws IncorrectDataException, NotEnoughMoneyException {
-
         checkUserBalance(payment.getPrice(), user.getMoney());
         PaymentDao paymentDao = daoFactory.createPaymentDao();
         try{
@@ -32,18 +30,6 @@ public class PaymentService {
             paymentDao.close();
         }
         return payment;
-    }
-
-    public Payment getById(int id) {
-        try(PaymentDao paymentDao = daoFactory.createPaymentDao()) {
-            return paymentDao.findById(id);
-        }
-    }
-
-    public List<Payment> getAll() {
-        try(PaymentDao paymentDao = daoFactory.createPaymentDao()) {
-            return paymentDao.findAll();
-        }
     }
 
     private void checkUserBalance(int price, int balance) throws NotEnoughMoneyException {

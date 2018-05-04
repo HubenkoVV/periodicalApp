@@ -83,24 +83,6 @@ public class ArticleDaoJDBC implements ArticleDao {
     }
 
     @Override
-    public List<Article> findFixedNumberOfArticles(int limit, int offset) {
-        List<Article> resultList = new ArrayList<>();
-        ArticleMapper articleMapper = new ArticleMapper();
-
-        try (PreparedStatement ps = connection.prepareStatement(Requests.SELECT_ARTICLES_LIMIT)) {
-            ps.setInt(1, limit);
-            ps.setInt(2, offset);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                resultList.add(articleMapper.getFromResultSet(rs));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return resultList;
-    }
-
-    @Override
     public List<Article> findByPeriodicalFixedNumberOfArticles(int id, int limit, int offset) {
         List<Article> resultList = new ArrayList<>();
         ArticleMapper articleMapper = new ArticleMapper();

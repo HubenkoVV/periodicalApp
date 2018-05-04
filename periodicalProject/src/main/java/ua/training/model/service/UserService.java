@@ -8,12 +8,11 @@ import ua.training.util.constant.Exceptions;
 import ua.training.util.constant.RegexForUser;
 
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserService {
-    private AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
+    AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
     public User createUser(User user, String password, String repeatPassword) throws IncorrectDataException {
         checkRegistrationData(user, password, repeatPassword);
@@ -60,15 +59,8 @@ public class UserService {
         User user;
         try(UserDao userDao = daoFactory.createUserDao()) {
             user = userDao.findById(id);
-            userDao.close();
         }
         return user;
-    }
-
-    public List<User> getAll() {
-        try(UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.findAll();
-        }
     }
 
     private void checkRegistrationData(User user, String password, String repeatPassword) throws IncorrectDataException {

@@ -1,5 +1,7 @@
 package ua.training.model.entities;
 
+import ua.training.model.entities.lazyload.LazyPeriodical;
+
 import java.util.List;
 
 public class Periodical {
@@ -32,7 +34,7 @@ public class Periodical {
         return shortDescription;
     }
 
-    void setShortDescription(String shortDescription) {
+    public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
@@ -63,13 +65,7 @@ public class Periodical {
 
         Periodical that = (Periodical) o;
 
-        return id == that.id
-                && price == that.price
-                && name.equals(that.name)
-                && shortDescription.equals(that.shortDescription)
-                && (users != null ? users.equals(that.users) : that.users == null)
-                && (payments != null ? payments.equals(that.payments) : that.payments == null)
-                && (articles != null ? articles.equals(that.articles) : that.articles == null);
+        return id == that.id;
     }
 
     @Override
@@ -112,6 +108,15 @@ public class Periodical {
 
         public Periodical build(){
             Periodical periodical = new Periodical();
+            periodical.setId(id);
+            periodical.setName(name);
+            periodical.setPrice(price);
+            periodical.setShortDescription(shortDescription);
+            return periodical;
+        }
+
+        public LazyPeriodical buildLazy(){
+            LazyPeriodical periodical = new LazyPeriodical();
             periodical.setId(id);
             periodical.setName(name);
             periodical.setPrice(price);

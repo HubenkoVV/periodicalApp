@@ -15,7 +15,7 @@ import java.util.Map;
 public class PeriodicalService {
     private AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
-    public Periodical createPeriodical(Periodical periodical) throws IncorrectDataException {
+    public void createPeriodical(Periodical periodical) throws IncorrectDataException {
         PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao();
         try{
             periodicalDao.setAutoCommit(false);
@@ -30,18 +30,11 @@ public class PeriodicalService {
         } finally {
             periodicalDao.close();
         }
-        return periodical;
     }
 
     public Periodical getById(int id) {
         try(PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             return periodicalDao.findById(id);
-        }
-    }
-
-    public List<Periodical> getAll() {
-        try(PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
-            return periodicalDao.findAll();
         }
     }
 
