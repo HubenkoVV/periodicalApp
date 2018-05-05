@@ -9,7 +9,7 @@ public class User {
     private String name;
     private String surname;
     private String login;
-    private int password;
+    private String password;
     private String phone;
     private UserRole role;
     private int money;
@@ -49,11 +49,11 @@ public class User {
         this.login = login;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    protected void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -100,16 +100,7 @@ public class User {
 
         User user = (User) o;
 
-        return id == user.id
-                && password == user.password
-                && money == user.money
-                && name.equals(user.name)
-                && surname.equals(user.surname)
-                && login.equals(user.login)
-                && (phone != null ? phone.equals(user.phone) : user.phone == null)
-                && role == user.role
-                && (payments != null ? payments.equals(user.payments) : user.payments == null)
-                && (periodicals != null ? periodicals.equals(user.periodicals) : user.periodicals == null);
+        return id == user.id;
     }
 
     @Override
@@ -118,7 +109,7 @@ public class User {
         result = 31 * result + name.hashCode();
         result = 31 * result + surname.hashCode();
         result = 31 * result + login.hashCode();
-        result = 31 * result + password;
+        result = 31 * result + password.hashCode();
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + role.hashCode();
         result = 31 * result + money;
@@ -132,7 +123,7 @@ public class User {
         private String name;
         private String surname;
         private String login;
-        private int password;
+        private String password;
         private String phone;
         private UserRole role;
         private int money;
@@ -157,7 +148,7 @@ public class User {
             return this;
         }
 
-        public UserBuilder buildPassword(int password) {
+        public UserBuilder buildPassword(String password) {
             this.password = password;
             return this;
         }

@@ -57,11 +57,7 @@ public class Article {
 
         Article article = (Article) o;
 
-        return id == article.id
-                && idPeriodical == article.idPeriodical
-                && name.equals(article.name)
-                && text.equals(article.text)
-                && date.equals(article.date);
+        return id == article.id;
     }
 
     @Override

@@ -39,7 +39,7 @@ public class UserDaoJDBC implements UserDao {
             ps.setString(1,entity.getName());
             ps.setString(2,entity.getSurname());
             ps.setString(3,entity.getLogin());
-            ps.setInt(4,entity.getPassword());
+            ps.setString(4,entity.getPassword());
             ps.setString(5,entity.getRole().getName());
             ps.setInt(6,entity.getMoney());
             ps.setString(7,entity.getPhone());

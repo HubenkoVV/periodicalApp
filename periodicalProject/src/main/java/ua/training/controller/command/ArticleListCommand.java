@@ -33,17 +33,15 @@ public class ArticleListCommand implements Command {
             return (String) request.getSession().getAttribute(Attributes.PAGE);
         }
 
-        Map<Integer, List<Article>> articlesOnPage;
-        List<Article> articlesList;
         String idPeriodical = request.getParameter(Attributes.ID_PERIODICAL);
         Periodical periodical = periodicalService.getById(Integer.parseInt(idPeriodical));
 
         String articlesPage = request.getParameter(Attributes.ARTICLES_PAGE);
 
-        articlesOnPage = articleService.getArticlesOnPagesByPeriodical(Integer.parseInt(idPeriodical),4);
+        Map<Integer, List<Article>> articlesOnPage = articleService.getArticlesOnPagesByPeriodical(Integer.parseInt(idPeriodical),4);
 
         if (articlesPage == null || articlesPage.isEmpty()) articlesPage = "1";
-        articlesList = articlesOnPage.getOrDefault(Integer.parseInt(articlesPage), articlesOnPage.get(1));
+        List<Article> articlesList = articlesOnPage.getOrDefault(Integer.parseInt(articlesPage), articlesOnPage.get(1));
 
         request.setAttribute(Attributes.PERIODICAL, periodical);
         request.setAttribute(Attributes.ARTICLE_LIST, articlesList);

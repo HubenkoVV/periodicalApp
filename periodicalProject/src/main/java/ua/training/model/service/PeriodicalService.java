@@ -2,7 +2,6 @@ package ua.training.model.service;
 
 import ua.training.model.dao.PeriodicalDao;
 import ua.training.model.dao.factory.AbstractDaoFactory;
-import ua.training.model.dao.factory.DaoFactory;
 import ua.training.model.entities.Periodical;
 import ua.training.model.service.exception.IncorrectDataException;
 import ua.training.util.constant.Exceptions;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PeriodicalService {
-    private AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
+    AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
     public Periodical createPeriodical(Periodical periodical) throws IncorrectDataException {
         PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao();
@@ -39,14 +38,8 @@ public class PeriodicalService {
         }
     }
 
-    public List<Periodical> getAll() {
-        try(PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
-            return periodicalDao.findAll();
-        }
-    }
-
     public Map<Integer, List<Periodical>> getPeriodicalsOnPages(int periodicalsOnPage) {
-        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+        try (PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             Map<Integer, List<Periodical>> result = new HashMap<>();
             List<Periodical> pageOfPeriodicals = periodicalDao.findFixedNumberOfPeriodicals(periodicalsOnPage, 0);
 
@@ -60,7 +53,7 @@ public class PeriodicalService {
     }
 
     public Map<Integer, List<Periodical>> searchPeriodicals(String name, int periodicalsOnPage) {
-        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+        try (PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             Map<Integer, List<Periodical>> result = new HashMap<>();
             List<Periodical> pageOfPeriodicals = periodicalDao.searchPeriodicals(name, periodicalsOnPage, 0);
 

@@ -23,17 +23,20 @@ public class ExceptionTag extends SimpleTagSupport {
         try {
             StringBuilder sb = new StringBuilder();
             if (exception != null && !exception.isEmpty()) {
-                sb.append("<div class=\"alert alert-danger alert-dismissible center-block\" style=\"width: 90%;\">\n")
-                        .append("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n")
-                        .append("<span aria-hidden=\"true\">&times;</span>\n")
-                        .append("</button>")
-                        .append(exception)
-                        .append("</div>\n");
+                createAlert(sb);
                 out.println(sb.toString());
             }
-
         } catch (Exception e) {
             throw new SkipPageException("Error while creating alert for exception");
         }
+    }
+
+    private void createAlert(StringBuilder sb) {
+        sb.append("<div class=\"alert alert-danger alert-dismissible center-block\" style=\"width: 90%;\">\n")
+                .append("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n")
+                .append("<span aria-hidden=\"true\">&times;</span>\n")
+                .append("</button>")
+                .append(exception)
+                .append("</div>\n");
     }
 }

@@ -3,7 +3,6 @@ package ua.training.controller.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.entities.Article;
-import ua.training.model.entities.Periodical;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.PeriodicalService;
 import ua.training.util.constant.Attributes;
@@ -27,8 +26,8 @@ public class ShowArticleCommand implements Command {
     public String execute(HttpServletRequest request) {
         int idArticle = Integer.parseInt(request.getParameter(Attributes.ARTICLE_ID));
         Article article = articleService.getById(idArticle);
-        Periodical periodical = periodicalService.getById(article.getIdPeriodical());
-        request.setAttribute(Attributes.PERIODICAL, periodical);
+
+        request.setAttribute(Attributes.PERIODICAL, periodicalService.getById(article.getIdPeriodical()));
         request.setAttribute(Attributes.ARTICLE, article);
         request.getSession().setAttribute(Attributes.PAGE, Commands.SHOW_ARTICLE + "?"+ Attributes.ARTICLE_ID + "=" + idArticle );
         logger.info("Show article with id = " + idArticle);

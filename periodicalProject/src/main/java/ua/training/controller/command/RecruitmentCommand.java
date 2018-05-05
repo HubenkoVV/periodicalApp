@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RecruitmentCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SignInCommand.class);
+    private static final Logger logger = LogManager.getLogger(RecruitmentCommand.class);
     private UserService userService;
 
     RecruitmentCommand(UserService userService) {
@@ -23,9 +23,8 @@ public class RecruitmentCommand implements Command {
     public String execute(HttpServletRequest request) {
         request.setAttribute(Attributes.EXCEPTION, null);
         User user = (User) request.getSession().getAttribute(Attributes.USER);
-        String money = request.getParameter(Attributes.MONEY);
         try {
-            user = userService.updateAccount(user, money);
+            user = userService.updateAccount(user, request.getParameter(Attributes.MONEY));
             request.getSession().setAttribute(Attributes.USER, user);
         } catch (IncorrectDataException e) {
             logger.info("Update account for \'" + user.getLogin() + "\' was failed");

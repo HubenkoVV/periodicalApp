@@ -1,6 +1,5 @@
 package ua.training.controller.filter;
 
-import ua.training.controller.command.Command;
 import ua.training.model.entities.UserRole;
 import ua.training.util.constant.Attributes;
 import ua.training.util.constant.Commands;

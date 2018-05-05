@@ -2,14 +2,11 @@ package ua.training.controller.command;
 
 import ua.training.model.entities.Periodical;
 import ua.training.model.entities.User;
-import ua.training.model.entities.UserRole;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
 import ua.training.util.constant.Attributes;
 import ua.training.util.constant.Commands;
-import ua.training.util.constant.Exceptions;
 import ua.training.util.constant.Pages;
-import ua.training.util.locale.LocalizeMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class PeriodicalListCommand implements Command {
         String searchName = request.getParameter(Attributes.PERIODICAL_SEARCH);
         List<Periodical> periodicalsOfUser;
         Map<Integer, List<Periodical>> periodicalsOnPage;
-        if(searchName == null || searchName.isEmpty()) {
+        if(searchName == null || searchName.isEmpty() || searchName.equals("null")) {
             periodicalsOnPage = periodicalService.getPeriodicalsOnPages(4);
         }
         else {

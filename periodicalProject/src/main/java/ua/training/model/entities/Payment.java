@@ -1,5 +1,7 @@
 package ua.training.model.entities;
 
+import ua.training.model.entities.lazyload.LazyPayment;
+
 import java.util.List;
 
 public class Payment {
@@ -21,7 +23,7 @@ public class Payment {
         return price;
     }
 
-    void setPrice(int price) {
+    protected void setPrice(int price) {
         this.price = price;
     }
 
@@ -29,7 +31,7 @@ public class Payment {
         return idUser;
     }
 
-    void setIdUser(int idUser) {
+    protected void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
@@ -48,10 +50,7 @@ public class Payment {
 
         Payment payment = (Payment) o;
 
-        return id == payment.id
-                && price == payment.price
-                && idUser == payment.idUser
-                && periodicals.equals(payment.periodicals);
+        return id == payment.id;
     }
 
     @Override
@@ -91,6 +90,15 @@ public class Payment {
 
         public Payment build(){
             Payment payment = new Payment();
+            payment.setId(id);
+            payment.setIdUser(idUser);
+            payment.setPrice(price);
+            payment.setPeriodicals(periodicals);
+            return payment;
+        }
+
+        public LazyPayment buildLazy(){
+            LazyPayment payment = new LazyPayment();
             payment.setId(id);
             payment.setIdUser(idUser);
             payment.setPrice(price);

@@ -4,18 +4,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.entities.User;
 import ua.training.model.entities.UserRole;
-import ua.training.model.entities.lazyload.LazyUser;
 import ua.training.model.service.UserService;
 import ua.training.model.service.exception.IncorrectDataException;
 import ua.training.util.constant.Attributes;
-import ua.training.util.constant.Messages;
 import ua.training.util.locale.LocalizeMessage;
+import ua.training.util.secure.SecurePasswordMD5;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class RegistrationCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SignInCommand.class);
+    private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
     private UserService userService;
 
     RegistrationCommand(UserService userService) {
@@ -33,7 +32,7 @@ public class RegistrationCommand implements Command {
                             .buildLogin(request.getParameter(Attributes.LOGIN))
                             .buildName(request.getParameter(Attributes.NAME))
                             .buildSurname(request.getParameter(Attributes.SURNAME))
-                            .buildPassword(request.getParameter(Attributes.PASSWORD).hashCode())
+                            .buildPassword(SecurePasswordMD5.getSecurePassword(request.getParameter(Attributes.PASSWORD)))
                             .buildRole(UserRole.USER)
                             .buildMoney(0)
                             .buildPhone(request.getParameter(Attributes.PHONE))
