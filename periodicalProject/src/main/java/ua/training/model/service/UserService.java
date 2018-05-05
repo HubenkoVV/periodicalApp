@@ -6,14 +6,14 @@ import ua.training.model.entities.User;
 import ua.training.model.service.exception.IncorrectDataException;
 import ua.training.util.constant.Exceptions;
 import ua.training.util.constant.RegexForUser;
+import ua.training.util.secure.SecurePasswordMD5;
 
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserService {
-    private AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
+    AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
     public User createUser(User user, String password, String repeatPassword) throws IncorrectDataException {
         checkRegistrationData(user, password, repeatPassword);
@@ -60,18 +60,11 @@ public class UserService {
         User user;
         try(UserDao userDao = daoFactory.createUserDao()) {
             user = userDao.findById(id);
-            userDao.close();
         }
         return user;
     }
 
-    public List<User> getAll() {
-        try(UserDao userDao = daoFactory.createUserDao()) {
-            return userDao.findAll();
-        }
-    }
-
-    private void checkRegistrationData(User user, String password, String repeatPassword) throws IncorrectDataException {
+    void checkRegistrationData(User user, String password, String repeatPassword) throws IncorrectDataException {
         if (!isDataCorrect(user.getLogin(), RegexForUser.LOGIN)) {
             throw new IncorrectDataException(Exceptions.INCORRECT_LOGIN);
         }
@@ -86,13 +79,13 @@ public class UserService {
         }
     }
 
-    private void checkPassword(String password, int userPass) throws IncorrectDataException {
-        if(password.hashCode() != userPass){
+    private void checkPassword(String password, String userPassword) throws IncorrectDataException {
+        if(!SecurePasswordMD5.verifyPassword(password, userPassword)){
             throw new IncorrectDataException(Exceptions.WRONG_PASSWORD);
         }
     }
 
-    private boolean isDataCorrect(String data, String regex) {
+    boolean isDataCorrect(String data, String regex) {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(data);
         return m.matches();
