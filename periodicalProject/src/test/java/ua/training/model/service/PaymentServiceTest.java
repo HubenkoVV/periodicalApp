@@ -26,18 +26,37 @@ public class PaymentServiceTest {
 
     @Test
     public void createPayment() throws Exception {
-        User user = new User.UserBuilder().buildLogin("test@test.test").buildPhone("").buildSurname("test").buildName("test")
-                .buildRole(UserRole.USER).buildMoney(13).buildPassword("testtest").buildLazy();
+        User user = new User.UserBuilder()
+                .buildLogin("test@test.test")
+                .buildPhone("")
+                .buildSurname("test")
+                .buildName("test")
+                .buildRole(UserRole.USER)
+                .buildMoney(13)
+                .buildPassword("testtest")
+                .buildLazy();
         List<Periodical> periodicalList = new ArrayList<Periodical>(){{
             add(new Periodical.PeriodicalBuilder().buildId(1).buildLazy());
         }};
 
-        Payment payment = new Payment.PaymentBuilder().buildId(1).buildIdUser(1).buildPrice(13)
-                .buildPeriodicals(periodicalList).buildLazy();
-        Payment failedPayment = new Payment.PaymentBuilder().buildId(2).buildIdUser(1).buildPrice(-1)
-                .buildPeriodicals(periodicalList).buildLazy();
-        Payment failedPayment2 = new Payment.PaymentBuilder().buildId(2).buildIdUser(1).buildPrice(14)
-                .buildPeriodicals(periodicalList).buildLazy();
+        Payment payment = new Payment.PaymentBuilder()
+                .buildId(1)
+                .buildIdUser(1)
+                .buildPrice(13)
+                .buildPeriodicals(periodicalList)
+                .buildLazy();
+        Payment failedPayment = new Payment.PaymentBuilder()
+                .buildId(2)
+                .buildIdUser(1)
+                .buildPrice(-1)
+                .buildPeriodicals(periodicalList)
+                .buildLazy();
+        Payment failedPayment2 = new Payment.PaymentBuilder()
+                .buildId(2)
+                .buildIdUser(1)
+                .buildPrice(14)
+                .buildPeriodicals(periodicalList)
+                .buildLazy();
 
         when(daoFactoryMock.createPaymentDao()).thenReturn(paymentDaoMock);
         when(paymentDaoMock.create(payment)).thenReturn(1);

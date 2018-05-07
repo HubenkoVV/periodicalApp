@@ -14,6 +14,12 @@ import java.util.Map;
 public class PeriodicalService {
     AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
+    /**
+     * Method creates new periodical
+     * @param periodical for creating
+     * @return created periodical
+     * @throws IncorrectDataException if some data for creating was incorrect
+     */
     public Periodical createPeriodical(Periodical periodical) throws IncorrectDataException {
         PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao();
         try{
@@ -32,12 +38,22 @@ public class PeriodicalService {
         return periodical;
     }
 
+    /**
+     * Method gives periodical by id
+     * @param id for search
+     * @return periodical
+     */
     public Periodical getById(int id) {
         try(PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             return periodicalDao.findById(id);
         }
     }
 
+    /**
+     * Methods gives periodicals divided on pages
+     * @param periodicalsOnPage number of periodicals on one page
+     * @return list of periodicals
+     */
     public Map<Integer, List<Periodical>> getPeriodicalsOnPages(int periodicalsOnPage) {
         try (PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             Map<Integer, List<Periodical>> result = new HashMap<>();
@@ -52,6 +68,12 @@ public class PeriodicalService {
         }
     }
 
+    /**
+     * Methods gives periodicals from search divided on pages
+     * @param name whole name or part of it for search
+     * @param periodicalsOnPage number periodicals on one page
+     * @return list of periodicals
+     */
     public Map<Integer, List<Periodical>> searchPeriodicals(String name, int periodicalsOnPage) {
         try (PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             Map<Integer, List<Periodical>> result = new HashMap<>();

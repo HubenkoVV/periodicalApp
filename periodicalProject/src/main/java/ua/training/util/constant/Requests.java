@@ -2,6 +2,9 @@ package ua.training.util.constant;
 
 import java.util.ResourceBundle;
 
+/**
+ * Class gets all db requests from resource
+ */
 public class Requests {
     private static final ResourceBundle bundle = ResourceBundle.getBundle("requests");
 
@@ -29,7 +32,6 @@ public class Requests {
     public static String UPDATE_USER_MONEY = getMessage("update.user.money");
     public static String UPDATE_USER_MONEY_BUY = getMessage("update.user.money.buy");
     public static String SELECT_PERIODICALS_LIMIT = getMessage("select.periodicals.limit");
-    public static String SELECT_ARTICLES_LIMIT = getMessage("select.articles.limit");
     public static String SELECT_ARTICLES_LIMIT_BY_ID = getMessage("select.articles.by.periodical");
     public static String SEARCH_PERIODICAL = getMessage("search.periodical");
 

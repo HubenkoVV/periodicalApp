@@ -1,5 +1,8 @@
 package ua.training.util.constant;
 
+/**
+ * Interface with names of table columns in DB
+ */
 public interface TableColumns {
 
     String USER_ID = "iduser";

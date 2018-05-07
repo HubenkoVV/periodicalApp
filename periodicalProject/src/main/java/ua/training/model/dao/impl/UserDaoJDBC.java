@@ -10,6 +10,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class works with table "User" in DB
+ */
 public class UserDaoJDBC implements UserDao {
 
     private Connection connection;
@@ -18,6 +21,11 @@ public class UserDaoJDBC implements UserDao {
         this.connection = connection;
     }
 
+    /**
+     * Method gives user by entered login
+     * @param login for search
+     * @return user
+     */
     @Override
     public User findByLogin(String login) {
         UserMapper userMapper = new UserMapper();
@@ -33,6 +41,11 @@ public class UserDaoJDBC implements UserDao {
         return null;
     }
 
+    /**
+     * Method adds user into DB
+     * @param entity - user created in RegistrationCommand
+     * @return created user's id
+     */
     @Override
     public int create(User entity) {
         try(PreparedStatement ps = connection.prepareStatement(Requests.INSERT_USER, Statement.RETURN_GENERATED_KEYS)){
@@ -54,6 +67,11 @@ public class UserDaoJDBC implements UserDao {
         return 0;
     }
 
+    /**
+     * Method gives user by id
+     * @param id for search
+     * @return user
+     */
     @Override
     public User findById(int id) {
         UserMapper userMapper = new UserMapper();
@@ -69,6 +87,9 @@ public class UserDaoJDBC implements UserDao {
         return null;
     }
 
+    /**
+     * @return list of users
+     */
     @Override
     public List<User> findAll() {
         UserMapper userMapper = new UserMapper();
@@ -84,6 +105,10 @@ public class UserDaoJDBC implements UserDao {
         return resultList;
     }
 
+    /**
+     * Method adds entered sum to user's account
+     * @param user with new money sum
+     */
     @Override
     public void updateMoney(User user) {
         try (PreparedStatement ps = connection.prepareStatement(Requests.UPDATE_USER_MONEY)) {
@@ -96,6 +121,11 @@ public class UserDaoJDBC implements UserDao {
         }
     }
 
+    /**
+     * Method gives list of subscribers
+     * @param idPeriodical for find
+     * @return list of subscribers
+     */
     @Override
     public List<User> findByPeriodical(int idPeriodical) {
         UserMapper userMapper = new UserMapper();

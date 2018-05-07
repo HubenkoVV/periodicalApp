@@ -2,6 +2,9 @@ package ua.training.model.dao;
 
 import java.util.List;
 
+/**
+ * Interface with general methods for work with DB
+ */
 public interface GenericDao<T> extends AutoCloseable{
     int create (T entity);
     T findById(int id);

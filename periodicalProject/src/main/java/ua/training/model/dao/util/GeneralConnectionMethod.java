@@ -3,6 +3,9 @@ package ua.training.model.dao.util;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Class contains general methods for work with connection
+ */
 public class GeneralConnectionMethod {
     public static void close(Connection connection) {
         try {

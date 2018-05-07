@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This filter checks if user use only available for him commands
+ */
 public class CommandFilter implements Filter {
 
     private Map<UserRole, List<String>> commands;

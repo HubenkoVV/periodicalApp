@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PeriodicalMapper implements GeneralMapper<Periodical> {
+    /**
+     * Create Periodical object with data from DB
+     * @param rs resultSet that was gotten after execution of the request
+     * @return periodical object
+     * @throws SQLException
+     */
     @Override
     public Periodical getFromResultSet(ResultSet rs) throws SQLException {
         return new Periodical.PeriodicalBuilder()

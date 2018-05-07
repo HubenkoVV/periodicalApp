@@ -11,6 +11,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class works with table "Payment" in DB
+ */
 public class PaymentDaoJDBC implements PaymentDao {
 
     private Connection connection;
@@ -19,6 +22,11 @@ public class PaymentDaoJDBC implements PaymentDao {
         this.connection = connection;
     }
 
+    /**
+     * Method adds payment into DB and connect user with periodicals and periodicals with payment
+     * @param entity - payment created in BuyPeriodicalsCommand
+     * @return created payment's id
+     */
     @Override
     public int create(Payment entity) {
         try(PreparedStatement ps = connection.prepareStatement(Requests.INSERT_PAYMENT, Statement.RETURN_GENERATED_KEYS);
@@ -53,6 +61,11 @@ public class PaymentDaoJDBC implements PaymentDao {
         return 0;
     }
 
+    /**
+     * Method gives payment by id
+     * @param id for search
+     * @return payment
+     */
     @Override
     public Payment findById(int id) {
         PaymentMapper paymentMapper = new PaymentMapper();
@@ -68,6 +81,9 @@ public class PaymentDaoJDBC implements PaymentDao {
         return null;
     }
 
+    /**
+     * @return list of payments
+     */
     @Override
     public List<Payment> findAll() {
         PaymentMapper paymentMapper = new PaymentMapper();
@@ -83,6 +99,11 @@ public class PaymentDaoJDBC implements PaymentDao {
         return resultList;
     }
 
+    /**
+     * Method gives payments by user
+     * @param idUser user's id
+     * @return list of payments
+     */
     @Override
     public List<Payment> findByUser(int idUser) {
         PaymentMapper paymentMapper = new PaymentMapper();
@@ -99,6 +120,11 @@ public class PaymentDaoJDBC implements PaymentDao {
         return resultList;
     }
 
+    /**
+     * Method gives payments by periodical
+     * @param idPeriodical periodical's id
+     * @return list of payments
+     */
     @Override
     public List<Payment> findByPeriodical(int idPeriodical) {
         PaymentMapper paymentMapper = new PaymentMapper();

@@ -23,10 +23,18 @@ public class PeriodicalServiceTest {
     
     @Test
     public void createPeriodical() throws Exception {
-        Periodical periodical = new Periodical.PeriodicalBuilder().buildId(1).buildShortDescription("test").buildPrice(0)
-                .buildName("test").buildLazy();
-        Periodical failedPeriodical = new Periodical.PeriodicalBuilder().buildId(2).buildShortDescription("").buildPrice(0)
-                .buildName("").buildLazy();
+        Periodical periodical = new Periodical.PeriodicalBuilder()
+                .buildId(1)
+                .buildShortDescription("test")
+                .buildPrice(0)
+                .buildName("test")
+                .buildLazy();
+        Periodical failedPeriodical = new Periodical.PeriodicalBuilder()
+                .buildId(2)
+                .buildShortDescription("")
+                .buildPrice(0)
+                .buildName("")
+                .buildLazy();
 
         when(daoFactoryMock.createPeriodicalDao()).thenReturn(periodicalDaoMock);
         when(periodicalDaoMock.create(periodical)).thenReturn(1);
@@ -50,7 +58,9 @@ public class PeriodicalServiceTest {
     @Test
     public void getById() throws Exception {
         int id = 1;
-        Periodical periodical = new Periodical.PeriodicalBuilder().buildId(id).buildLazy();
+        Periodical periodical = new Periodical.PeriodicalBuilder()
+                .buildId(id)
+                .buildLazy();
 
         when(daoFactoryMock.createPeriodicalDao()).thenReturn(periodicalDaoMock);
         when(periodicalDaoMock.findById(id)).thenReturn(periodical);

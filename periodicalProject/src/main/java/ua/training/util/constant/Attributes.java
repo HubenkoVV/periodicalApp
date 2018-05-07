@@ -1,5 +1,8 @@
 package ua.training.util.constant;
 
+/**
+ * Interface with all names of attributes that are used by Request in Servlet
+ */
 public interface Attributes {
     String PAGE = "page";
     String EXCEPTION = "exception";

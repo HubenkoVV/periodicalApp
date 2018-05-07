@@ -25,9 +25,20 @@ public class ArticleServiceTest {
     @Test
     public void createArticle() throws Exception {
         Article article = new Article.ArticleBuilder()
-                .buildId(1).buildText("test").buildName("test").buildDate(LocalDate.now()).buildIdPeriodical(1).build();
+                .buildId(1)
+                .buildText("test")
+                .buildName("test")
+                .buildDate(LocalDate.now())
+                .buildIdPeriodical(1)
+                .build();
         Article failedArticle = new Article.ArticleBuilder()
-                .buildId(2).buildText("test").buildName("test").buildDate(LocalDate.now()).buildIdPeriodical(1).build();
+                .buildId(2)
+                .buildText("test")
+                .buildName("test")
+                .buildDate(LocalDate.now())
+                .buildIdPeriodical(1)
+                .build();
+
         when(daoFactoryMock.createArticleDao()).thenReturn(articleDaoMock);
         when(articleDaoMock.create(article)).thenReturn(1);
         when(articleDaoMock.create(failedArticle)).thenReturn(0);
@@ -50,7 +61,9 @@ public class ArticleServiceTest {
     @Test
     public void getById() throws Exception {
         int id = 1;
-        Article article = new Article.ArticleBuilder().buildId(id).build();
+        Article article = new Article.ArticleBuilder()
+                .buildId(id)
+                .build();
 
         when(daoFactoryMock.createArticleDao()).thenReturn(articleDaoMock);
         when(articleDaoMock.findById(id)).thenReturn(article);
