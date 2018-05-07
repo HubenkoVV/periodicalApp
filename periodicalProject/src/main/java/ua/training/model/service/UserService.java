@@ -15,6 +15,12 @@ import java.util.regex.Pattern;
 public class UserService {
     AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
+    /**
+     * Method creates new user
+     * @param user for creating
+     * @return created user
+     * @throws IncorrectDataException if some data for creating was incorrect
+     */
     public User createUser(User user, String password, String repeatPassword) throws IncorrectDataException {
         checkRegistrationData(user, password, repeatPassword);
         UserDao userDao = daoFactory.createUserDao();
@@ -34,6 +40,13 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Method gives user by login for SingInCommand and check password with user's real password
+     * @param login for search
+     * @param password from authorization
+     * @return user
+     * @throws IncorrectDataException if password is wrong or login isn't exist
+     */
     public User getByLoginAndPassword(String login, String password) throws IncorrectDataException {
         try(UserDao userDao = daoFactory.createUserDao()) {
             User user = userDao.findByLogin(login);
@@ -45,6 +58,13 @@ public class UserService {
         }
     }
 
+    /**
+     * Method maximizes user account sum on number that user inputted
+     * @param user for updating
+     * @param money sum for updating
+     * @return user with new information about his money
+     * @throws IncorrectDataException if format of number is incorrect
+     */
     public User updateAccount(User user, String money) throws IncorrectDataException {
         try(UserDao userDao = daoFactory.createUserDao()) {
             if(!isDataCorrect(money, RegexForUser.MONEY))
@@ -56,6 +76,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Method gives user by id
+     * @param id for search
+     * @return user
+     */
     public User getById(int id) {
         User user;
         try(UserDao userDao = daoFactory.createUserDao()) {
@@ -64,6 +89,13 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Check data for registration action
+     * @param user user that did registration
+     * @param password for checking with patten
+     * @param repeatPassword for checking with password
+     * @throws IncorrectDataException if some data is incorrect
+     */
     void checkRegistrationData(User user, String password, String repeatPassword) throws IncorrectDataException {
         if (!isDataCorrect(user.getLogin(), RegexForUser.LOGIN)) {
             throw new IncorrectDataException(Exceptions.INCORRECT_LOGIN);
@@ -79,12 +111,24 @@ public class UserService {
         }
     }
 
+    /**
+     * Check password for sign in action
+     * @param password input
+     * @param userPassword from DB
+     * @throws IncorrectDataException if passwords are different
+     */
     private void checkPassword(String password, String userPassword) throws IncorrectDataException {
         if(!SecurePasswordMD5.verifyPassword(password, userPassword)){
             throw new IncorrectDataException(Exceptions.WRONG_PASSWORD);
         }
     }
 
+    /**
+     * Check different data that have a special pattern
+     * @param data text for checking
+     * @param regex pattern
+     * @return result of checking
+     */
     boolean isDataCorrect(String data, String regex) {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(data);

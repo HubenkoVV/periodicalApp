@@ -10,6 +10,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class works with table "Article" in DB
+ */
 public class ArticleDaoJDBC implements ArticleDao {
 
     private Connection connection;
@@ -18,6 +21,11 @@ public class ArticleDaoJDBC implements ArticleDao {
         this.connection = connection;
     }
 
+    /**
+     * Method adds article into DB
+     * @param entity - article created in AddArticleCommand
+     * @return created article's id
+     */
     @Override
     public int create(Article entity) {
         try(PreparedStatement ps = connection.prepareStatement(Requests.INSERT_ARTICLE, Statement.RETURN_GENERATED_KEYS)){
@@ -36,6 +44,11 @@ public class ArticleDaoJDBC implements ArticleDao {
         return 0;
     }
 
+    /**
+     * Method gives article by id
+     * @param id for search
+     * @return article
+     */
     @Override
     public Article findById(int id) {
         ArticleMapper articleMapper = new ArticleMapper();
@@ -51,6 +64,9 @@ public class ArticleDaoJDBC implements ArticleDao {
         return null;
     }
 
+    /**
+     * @return list of articles
+     */
     @Override
     public List<Article> findAll() {
         ArticleMapper articleMapper = new ArticleMapper();
@@ -66,6 +82,11 @@ public class ArticleDaoJDBC implements ArticleDao {
         return resultList;
     }
 
+    /**
+     * Method gives articles from periodical
+     * @param idPeriodical periodical's id
+     * @return list of articles
+     */
     @Override
     public List<Article> findByPeriodical(int idPeriodical) {
         ArticleMapper articleMapper = new ArticleMapper();
@@ -82,6 +103,13 @@ public class ArticleDaoJDBC implements ArticleDao {
         return resultList;
     }
 
+    /**
+     * Method gives articles from periodical on the concrete page
+     * @param id periodical's id
+     * @param limit number of objects on page
+     * @param offset start object
+     * @return list of articles on page
+     */
     @Override
     public List<Article> findByPeriodicalFixedNumberOfArticles(int id, int limit, int offset) {
         List<Article> resultList = new ArrayList<>();

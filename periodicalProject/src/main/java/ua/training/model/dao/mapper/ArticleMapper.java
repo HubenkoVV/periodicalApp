@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ArticleMapper implements GeneralMapper<Article> {
+    /**
+     * Create Article object with data from DB
+     * @param rs resultSet that was gotten after execution of the request
+     * @return article object
+     * @throws SQLException
+     */
     @Override
     public Article getFromResultSet(ResultSet rs) throws SQLException {
         return new Article.ArticleBuilder()

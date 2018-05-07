@@ -16,6 +16,12 @@ public class ArticleService {
 
     AbstractDaoFactory daoFactory = AbstractDaoFactory.getInstance();
 
+    /**
+     * Method creates new article
+     * @param article for creating
+     * @return created article
+     * @throws IncorrectDataException if some data for creating was incorrect
+     */
     public Article createArticle(Article article) throws IncorrectDataException {
         ArticleDao articleDao = daoFactory.createArticleDao();
         try{
@@ -35,12 +41,23 @@ public class ArticleService {
         return article;
     }
 
+    /**
+     * Method gives article by id
+     * @param id for search
+     * @return article
+     */
     public Article getById(int id) {
         try(ArticleDao articleDao = daoFactory.createArticleDao()) {
             return articleDao.findById(id);
         }
     }
 
+    /**
+     * Methods gives articles from periodical divided on pages
+     * @param id of periodical
+     * @param articlesOnPage number of articles on one page
+     * @return list of articles
+     */
     public Map<Integer, List<Article>> getArticlesOnPagesByPeriodical(int id, int articlesOnPage) {
         try (ArticleDao articleDao = daoFactory.createArticleDao()) {
             Map<Integer, List<Article>> result = new HashMap<>();
@@ -56,6 +73,12 @@ public class ArticleService {
         }
     }
 
+    /**
+     * Method transforms text from textarea field from jsp page
+     * to one string
+     * @param text from textarea
+     * @return string of text
+     */
     @NotNull String textareaToHTML(String text){
         String textInHTML = text.replaceAll("\r\n", "<p>");
         return "<p>" + textInHTML;

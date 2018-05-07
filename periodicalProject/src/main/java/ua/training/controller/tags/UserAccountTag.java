@@ -11,6 +11,9 @@ import javax.servlet.jsp.SkipPageException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
+/**
+ * Create a table with information about user in user account page
+ */
 public class UserAccountTag extends SimpleTagSupport {
 
     private User user;

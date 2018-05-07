@@ -7,6 +7,9 @@ import javax.servlet.jsp.SkipPageException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
+/**
+ * Create exception alert where user can see an information about exception was occurred
+ */
 public class ExceptionTag extends SimpleTagSupport {
 
     private String exception;

@@ -8,6 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper implements GeneralMapper<User> {
+    /**
+     * Create User object with data from DB
+     * @param rs resultSet that was gotten after execution of the request
+     * @return user
+     * @throws SQLException
+     */
     @Override
     public User getFromResultSet(ResultSet rs) throws SQLException {
         return new User.UserBuilder()
