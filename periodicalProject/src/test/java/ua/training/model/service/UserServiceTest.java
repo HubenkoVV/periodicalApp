@@ -26,10 +26,23 @@ public class UserServiceTest {
 
     @Test
     public void createUser() throws Exception {
-        User user = new User.UserBuilder().buildId(1).buildLogin("test@test.test").buildName("test").buildPassword("testtest")
-                .buildSurname("test").buildRole(UserRole.USER).buildPhone("").buildLazy();
-        User failedUser = new User.UserBuilder().buildLogin("test@test.test").buildName("test").buildPassword("testtest")
-                .buildSurname("test").buildRole(UserRole.USER).buildPhone("").buildLazy();
+        User user = new User.UserBuilder()
+                .buildId(1)
+                .buildLogin("test@test.test")
+                .buildName("test")
+                .buildPassword("testtest")
+                .buildSurname("test")
+                .buildRole(UserRole.USER)
+                .buildPhone("")
+                .buildLazy();
+        User failedUser = new User.UserBuilder()
+                .buildLogin("test@test.test")
+                .buildName("test")
+                .buildPassword("testtest")
+                .buildSurname("test")
+                .buildRole(UserRole.USER)
+                .buildPhone("")
+                .buildLazy();
 
         when(daoFactoryMock.createUserDao()).thenReturn(userDaoMock);
         when(userDaoMock.create(user)).thenReturn(1);
@@ -54,7 +67,10 @@ public class UserServiceTest {
     public void getByLoginAndPassword() throws Exception {
         String login = "test@test.test";
         String password = "testtest";
-        User user = new User.UserBuilder().buildLogin(login).buildPassword("testtest").buildLazy();
+        User user = new User.UserBuilder()
+                .buildLogin(login)
+                .buildPassword("testtest")
+                .buildLazy();
 
         when(daoFactoryMock.createUserDao()).thenReturn(userDaoMock);
         when(userDaoMock.findByLogin(login)).thenReturn(user);
@@ -73,7 +89,11 @@ public class UserServiceTest {
     @Test
     public void updateAccount() throws Exception {
         String money = "12";
-        User user = new User.UserBuilder().buildId(1).buildLogin("test@test.test").buildPassword("testtest").buildLazy();
+        User user = new User.UserBuilder()
+                .buildId(1)
+                .buildLogin("test@test.test")
+                .buildPassword("testtest")
+                .buildLazy();
 
         when(daoFactoryMock.createUserDao()).thenReturn(userDaoMock);
         doNothing().when(userDaoMock).updateMoney(user);
@@ -92,7 +112,9 @@ public class UserServiceTest {
     @Test
     public void getById() throws Exception {
         int id = 1;
-        User user = new User.UserBuilder().buildId(id).buildLazy();
+        User user = new User.UserBuilder()
+                .buildId(id)
+                .buildLazy();
 
         when(daoFactoryMock.createUserDao()).thenReturn(userDaoMock);
         when(userDaoMock.findById(id)).thenReturn(user);
@@ -112,7 +134,11 @@ public class UserServiceTest {
     public void checkRegistrationData() throws Exception {
         UserService userService = spy(new UserService());
         String password = "testtest";
-        User user = new User.UserBuilder().buildPassword("testpassword").buildLogin("test@test.test").buildPhone("").buildLazy();
+        User user = new User.UserBuilder()
+                .buildPassword("testpassword")
+                .buildLogin("test@test.test")
+                .buildPhone("")
+                .buildLazy();
 
         userService.checkRegistrationData(user, password, password);
         try {
