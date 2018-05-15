@@ -6,7 +6,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="${pageContext.request.contextPath}/api/periodicals"><fmt:message bundle="${messages}" key="periodicals"/></a></li>
-      <form class="navbar-form navbar-left" action="/api/periodicals">
+      <form class="navbar-form navbar-left" action="/api/periodicals" method = "POST">
         <div class="form-group">
           <input type="text" class="form-control" id="search_name" placeholder="<fmt:message bundle='${messages}' key='search'/>" name="search_name" required>
         </div>
