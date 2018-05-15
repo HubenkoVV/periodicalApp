@@ -21,7 +21,6 @@ public class SecurePasswordMD5Test {
         hashedPaswords = new File(classLoader.getResource("hashed_passwords").getFile());
     }
 
-
     @Test
     public void getSecurePassword() throws Exception {
         try (Scanner scannerPass = new Scanner(passwords); Scanner scannerHash = new Scanner(hashedPaswords)) {

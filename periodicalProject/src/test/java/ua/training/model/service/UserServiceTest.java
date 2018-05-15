@@ -12,7 +12,6 @@ import ua.training.model.dao.factory.DaoFactory;
 import ua.training.model.entities.User;
 import ua.training.model.entities.UserRole;
 import ua.training.model.service.exception.IncorrectDataException;
-import ua.training.util.constant.Exceptions;
 import ua.training.util.constant.RegexForUser;
 import ua.training.util.secure.SecurePasswordMD5;
 
@@ -69,7 +68,7 @@ public class UserServiceTest {
         String password = "testtest";
         User user = new User.UserBuilder()
                 .buildLogin(login)
-                .buildPassword("testtest")
+                .buildPassword(SecurePasswordMD5.getSecurePassword("testtest"))
                 .buildLazy();
 
         when(daoFactoryMock.createUserDao()).thenReturn(userDaoMock);
