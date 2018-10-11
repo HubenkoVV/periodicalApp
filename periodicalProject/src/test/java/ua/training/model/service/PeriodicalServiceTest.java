@@ -29,6 +29,23 @@ public class PeriodicalServiceTest {
                 .buildPrice(0)
                 .buildName("test")
                 .buildLazy();
+
+        when(daoFactoryMock.createPeriodicalDao()).thenReturn(periodicalDaoMock);
+        when(periodicalDaoMock.create(periodical)).thenReturn(1);
+
+        PeriodicalService periodicalService = new PeriodicalService();
+        periodicalService.daoFactory = daoFactoryMock;
+        Periodical resultPeriodical = periodicalService.createPeriodical(periodical);
+
+        verify(daoFactoryMock,times(2)).createPeriodicalDao();
+        verify(periodicalDaoMock).create(periodical);
+        verify(periodicalDaoMock, times(2)).close();
+
+        assertThat(resultPeriodical, is(periodical));
+    }
+
+    @Test
+    public void createPeriodicalFail() throws Exception {
         Periodical failedPeriodical = new Periodical.PeriodicalBuilder()
                 .buildId(2)
                 .buildShortDescription("")
@@ -37,22 +54,17 @@ public class PeriodicalServiceTest {
                 .buildLazy();
 
         when(daoFactoryMock.createPeriodicalDao()).thenReturn(periodicalDaoMock);
-        when(periodicalDaoMock.create(periodical)).thenReturn(1);
         when(periodicalDaoMock.create(failedPeriodical)).thenReturn(0);
 
         PeriodicalService periodicalService = new PeriodicalService();
         periodicalService.daoFactory = daoFactoryMock;
-        Periodical resultPeriodical = periodicalService.createPeriodical(periodical);
         try {
             periodicalService.createPeriodical(failedPeriodical);
         } catch (IncorrectDataException ignored){}
 
         verify(daoFactoryMock,times(2)).createPeriodicalDao();
-        verify(periodicalDaoMock).create(periodical);
         verify(periodicalDaoMock).create(failedPeriodical);
         verify(periodicalDaoMock, times(2)).close();
-
-        assertThat(resultPeriodical, is(periodical));
     }
 
     @Test
